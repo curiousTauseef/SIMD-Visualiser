@@ -15,6 +15,7 @@ import {compile} from "../Utils/Compiler";
 import ErrorHandler from "./ErrorHandler";
 import {Pane, Tabs} from "../Utils/Tabs";
 import AsmVisualizer from "./ASMVisualizer";
+import ViewRegister from "./ViewRegister";
 import {createBrowserHistory} from 'history';
 import * as qs from 'qs';
 import ParametersPage from "./ParametersPage";
@@ -89,8 +90,8 @@ class App extends Component {
                 Object.assign(state.ast, generateAST(this.cm.current.editor))
             });
             compile(this.cm.current.editor.getValue(), (error, asm, ast) => {
-                if (error.length === 0) {
-                    asm = generateASM(asm);
+                if (error.length === 0) {console.log("avant ", asm);
+                    asm = generateASM(asm);console.log("apres ", asm);
                     this.setState((state) => {
                         state.asm.splice(0, state.asm.length);
                         asm.forEach(e => {
@@ -190,6 +191,10 @@ class App extends Component {
         }
         else if (visualize && parametersChosen) {
             rightPage = <Tabs selected={0}>
+                 <Pane label="ViewRegister">
+                    <ViewRegister cm={this.cm} asm={this.state.asm}
+                                   onGoToParameters={() => this.setState({parametersChosen: false})}/>
+                </Pane>
                 <Pane label="Graphical">
                     <AsmVisualizer cm={this.cm} asm={this.state.asm}
                                    onGoToParameters={() => this.setState({parametersChosen: false})}/>
