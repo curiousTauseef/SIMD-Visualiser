@@ -1,0 +1,34 @@
+.VectorRegister-container {
+    fill: var(--main);
+    filter: drop-shadow(3px 3px 2px rgba(42, 54, 59, .5));
+    -webkit-filter: drop-shadow(3px 3px 2px rgba(42, 54, 59, .5));
+}
+
+.VectorRegister-line {
+    stroke: var(--gray);
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+.VectorRegister-values {
+    fill: var(--clear-text-color);
+    text-anchor: middle;
+}
+
+.shift-values-right {
+    fill: var(--five);
+    text-anchor: middle;
+}
+
+.shift-values-left {
+    fill: var(--two);
+    text-anchor: middle;
+}
+
+.registerUsed {
+    display: flex;
+    justify-content: space-around;
+    background-color: steelblue;
+    
+}
+

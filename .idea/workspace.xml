@@ -340,9 +340,11 @@
         <option value="$PROJECT_DIR$/src/components/WaitingScreen.js" />
         <option value="$PROJECT_DIR$/src/Utils/Tabs.js" />
         <option value="$PROJECT_DIR$/src/ASMComponents/Vector.js" />
+        <option value="$PROJECT_DIR$/src/ASMComponents/VectorRegister.js" />
         <option value="$PROJECT_DIR$/src/ASMComponents/SequentialComponent.js" />
         <option value="$PROJECT_DIR$/src/Utils/Compiler.js" />
         <option value="$PROJECT_DIR$/src/css/Vector.css" />
+        <option value="$PROJECT_DIR$/src/css/VectorRegister.css" />
         <option value="$PROJECT_DIR$/src/Utils/Parser.js" />
         <option value="$PROJECT_DIR$/src/Utils/Registry.js" />
         <option value="$PROJECT_DIR$/src/components/App.js" />

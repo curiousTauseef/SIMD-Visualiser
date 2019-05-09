@@ -90,8 +90,8 @@ class App extends Component {
                 Object.assign(state.ast, generateAST(this.cm.current.editor))
             });
             compile(this.cm.current.editor.getValue(), (error, asm, ast) => {
-                if (error.length === 0) {console.log("avant ", asm);
-                    asm = generateASM(asm);console.log("apres ", asm);
+                if (error.length === 0) {
+                    asm = generateASM(asm);
                     this.setState((state) => {
                         state.asm.splice(0, state.asm.length);
                         asm.forEach(e => {
