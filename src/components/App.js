@@ -42,11 +42,11 @@ const RightContainer = styled.div`
 `
 
 class App extends Component {
-    constructor(props) {
+    constructor(props) {console.log("dans appl", props);
         super(props);
         let savedState = localStorage.getItem('app-state');
         this.history = createBrowserHistory();
-        this.state = {
+        this.state = {//initial state of the application, the next state depends on it
             code: `#include <x86intrin.h>\n\n__m128i PrefixSum(__m128i curr) {\n  __m128i Add = _mm_slli_si128(curr, 4); \n  curr = _mm_add_epi32(curr, Add);   \n  Add = _mm_slli_si128(curr, 8);    \n  return _mm_add_epi32(curr, Add);       \n}`,
             codeWasModifiedSinceLastCompile: true,
             disableButtons: false,
@@ -87,9 +87,9 @@ class App extends Component {
         if (this.state.codeWasModifiedSinceLastCompile) {
             this.setState((state) => {
                 Object.keys(state.ast).forEach(k => delete state.ast[k]);
-                Object.assign(state.ast, generateAST(this.cm.current.editor))
+                Object.assign(state.ast, generateAST(this.cm.current.editor));
             });
-            compile(this.cm.current.editor.getValue(), (error, asm, ast) => {
+            compile(this.cm.current.editor.getValue(), (error, asm, ast) => {console.log("asm",asm, "ast",ast, "bien avant");
                 if (error.length === 0) {
                     asm = generateASM(asm);
                     this.setState((state) => {

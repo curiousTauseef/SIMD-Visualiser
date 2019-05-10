@@ -5,7 +5,7 @@ import 'react-sortable-tree/style.css';
 import '../css/ASTVisualizer.css'
 import VectorRegister from "../ASMComponents/VectorRegister";
 
-
+const intrinsics=["vpslldq","vpaddd"];
 
 function extractregisters(props){
     var instructions = props.asm[0].body;
@@ -26,10 +26,10 @@ function registerFromParam(params){
         if(params[i][0]=="x"||params[i][0]=="y"||params[i][0]=="z"){
             Reg.push(params[i])
         }
-    }
+    }console.log("reg", Reg);
     return Reg
 }
-function extractRegistersAndInst(props){
+function extractRegistersAndInst(props){// this function extracts the registers used and for each of these registers, the instructions that it uses.
     var registersAndInst=[];
     for(var i=0; i<props.asm[0].body.length; i++){
         let register=registerFromParam(props.asm[0].body[i].params);
@@ -51,6 +51,20 @@ function extractRegistersAndInst(props){
         }
     }
     return registersAndInst.sort((a,b)=>a.register>b.register)
+}
+
+
+function extractInstAndRegisters(props){//this function return a table of triples {id, instruction, registers}. In fact it is from such sorted triplets on the id that will be built the dynamic visualization of registers ( SIMD registers only). registers (an array) in each triple is sort by the order of used (of a given register)
+        var instAndRegisters=[], id=0;
+        for(var i=0; i<props.asm[0].body.length; i++){
+            let obj={id:null, instruction:"", registers:[]};
+            if(intrinsics.indexOf(props.asm[0].body[i].name)!=-1){
+                [obj.id,obj.instruction,obj.registers]=[id,props.asm[0].body[i].name,registerFromParam(props.asm[0].body[i].params) ];
+                instAndRegisters.push(obj);console.log(obj);
+                id++
+            }
+        }
+        return instAndRegisters.sort((a,b)=>a.id>b.id)        
 }
 class ViewRegister extends Component {
     constructor(props) {console.log(props, "props");
@@ -77,7 +91,8 @@ class ViewRegister extends Component {
         };
 */
 this.state = {
-    registers: extractRegistersAndInst(props)
+    registers: extractRegistersAndInst(props),
+    instructions:extractInstAndRegisters(props)
 };
 
     }
@@ -137,14 +152,14 @@ this.state = {
     };
 */
 
-    render() {console.log( "dans render",this.state.registers )
+    render() {console.log( "dans render",this.state.registers , "instruction",this.state.instructions);
         /*return (
             <div>`test {this.state.registers}` </div>
             
         );*/
         return (
             <div>
-                <VectorRegister title= {this.state.registers.length} registers  body={this.state.registers}/>
+                <VectorRegister title= {this.state.registers.length} body={this.state.registers} instructions={this.state.instructions}/>
                 
             </div>
             );
